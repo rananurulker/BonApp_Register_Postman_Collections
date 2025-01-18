@@ -1,0 +1,322 @@
+{
+	"info": {
+		"_postman_id": "17f8f60c-49ac-4f30-ae6c-d9cf894ddb9e",
+		"name": "BonApp Registration API Negative Tests",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "38790160"
+	},
+	"item": [
+		{
+			"name": "Attempt to register with an already registered email",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Response status code is 400\", function () {",
+							"    pm.response.to.have.status(400);",
+							"});",
+							"",
+							"pm.test(\"Response body contains expected error message\", function () {",
+							"    const responseBody = pm.response.json();",
+							"    pm.expect(responseBody).to.have.property(\"message\", \"User with same email already exists\");",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"email\": \"{{registeredEmail}}\",\n  \"password\": \"Password123!\",\n  \"languageId\": 0,\n  \"emailConfirmationUrl\": \"https://bonaapp-dev-afhjdsgqcuc6fxch.z02.azurefd.net/login\"\n}"
+				},
+				"url": {
+					"raw": "{{baseUrl}}/api/account/register",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"api",
+						"account",
+						"register"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Attempt to register with a weak password",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Response status code is 400\", function () {",
+							"    pm.response.to.have.status(400);",
+							"});",
+							"",
+							"pm.test(\"Response body contains expected error message\", function () {",
+							"    const responseBody = pm.response.json();",
+							"    pm.expect(responseBody).to.have.property(\"message\", \"Password validation failed\");",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"email\": \"testusertesting@example.com\",\n  \"password\": \"weakPass\",\n  \"languageId\": 0,\n  \"emailConfirmationUrl\": \"https://bonaapp-dev-afhjdsgqcuc6fxch.z02.azurefd.net/login\"\n}"
+				},
+				"url": {
+					"raw": "{{baseUrl}}/api/account/register",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"api",
+						"account",
+						"register"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Attempt to register with an invalid email format",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Response status code is 400\", function () {",
+							"    pm.response.to.have.status(400);",
+							"});",
+							"",
+							"pm.test(\"Response body contains expected error message\", function () {",
+							"    const responseBody = pm.response.json();",
+							"    pm.expect(responseBody).to.have.property(\"message\", \"'\\Email\\' is not a valid email address.\");",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"email\": \"invalid-email\",\n  \"password\": \"{{password}}\",\n  \"languageId\": 0,\n  \"emailConfirmationUrl\": \"https://bonaapp-dev-afhjdsgqcuc6fxch.z02.azurefd.net/login\"\n}"
+				},
+				"url": {
+					"raw": "{{baseUrl}}/api/account/register",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"api",
+						"account",
+						"register"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Attempt to register with missing confirmation url",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Response status code is 400\", function () {",
+							"    pm.response.to.have.status(400);",
+							"});",
+							"",
+							"pm.test(\"Response body contains expected error message\", function () {",
+							"    const responseBody = pm.response.json();",
+							"    pm.expect(responseBody).to.have.property(\"message\", \"'\\Email Confirmation Url\\' must not be empty.\");",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"email\": \"testuser111@example.com\",\n  \"password\": \"{{password}}\"\n}"
+				},
+				"url": {
+					"raw": "{{baseUrl}}/api/account/register",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"api",
+						"account",
+						"register"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Attempt to register with missing required fields (email)",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Response status code is 400\", function () {",
+							"    pm.response.to.have.status(400);",
+							"});",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"password\": \"{{password}}\",\n  \"languageId\": 0,\n  \"emailConfirmationUrl\": \"https://bonaapp-dev-afhjdsgqcuc6fxch.z02.azurefd.net/login\"\n}"
+				},
+				"url": {
+					"raw": "{{baseUrl}}/api/account/register",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"api",
+						"account",
+						"register"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Attempt to register with missing required fields (password))",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Response status code is 400\", function () {",
+							"    pm.response.to.have.status(400);",
+							"});",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"email\": \"somemail@test.com\",\n  \"languageId\": 0,\n  \"emailConfirmationUrl\": \"https://bonaapp-dev-afhjdsgqcuc6fxch.z02.azurefd.net/login\"\n}"
+				},
+				"url": {
+					"raw": "{{baseUrl}}/api/account/register",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"api",
+						"account",
+						"register"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "baseUrl",
+			"value": "https://bonaapp-dev-afhjdsgqcuc6fxch.z02.azurefd.net"
+		},
+		{
+			"key": "registeredEmail",
+			"value": "rananurulker@gmail.com",
+			"type": "string"
+		},
+		{
+			"key": "password",
+			"value": "Ra1234567!",
+			"type": "string"
+		}
+	]
+}
