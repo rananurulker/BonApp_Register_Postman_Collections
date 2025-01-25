@@ -52,11 +52,4 @@ Ensure these variables are updated with appropriate values if necessary before r
 1. Select the desired collection (Negative Tests or Successful Registration Flow).
 2. Click the **Run** button to execute the collection in the Postman Runner.
 
-## Repository Structure
 
-```
-.
-├── README.md               # This readme file
-├── Negative_Tests.json     # Postman collection for negative test scenarios
-├── Successful_Tests.json   # Postman collection for successful registration flow
-```
